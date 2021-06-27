@@ -168,47 +168,45 @@ class _AddPageState extends State<AddPage> {
   }
 
   Widget _submit() {
-    return Builder(builder: (BuildContext context) {
-      return Hero(
-        tag: 'addButton',
-        child: Container(
-          height: 50,
-          width: double.infinity,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [Colors.blue.shade900, Colors.blue.shade600],
-                  stops: [0.28, 0.75],
-                  begin: FractionalOffset.bottomLeft,
-                  end: FractionalOffset.topRight)),
-          child: MaterialButton(
-            child: Text(
-              "Añadir gasto",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 17.0,
+    return Builder(
+      builder: (BuildContext context) {
+        return Container(
+            height: 50,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [Colors.blue.shade900, Colors.blue.shade600],
+                    stops: [0.28, 0.75],
+                    begin: FractionalOffset.bottomLeft,
+                    end: FractionalOffset.topRight)),
+            child: MaterialButton(
+              child: Text(
+                "Añadir gasto",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 17.0,
+                ),
               ),
-            ),
-            onPressed: () {
-              if (value > 0 && category != '') {
-                FirebaseFirestore.instance.collection('expenses').add({
-                  'category': category,
-                  'value': value,
-                  'month': DateTime.now().month,
-                  'day': DateTime.now().day
-                });
-                Navigator.of(context).pop();
-              } else {
-                // ignore: deprecated_member_use
-                Scaffold.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Selecciona la cantidad y la categoría.'),
-                  ),
-                );
-              }
-            },
-          ),
-        ),
-      );
-    });
+              onPressed: () {
+                if (value > 0 && category != '') {
+                  FirebaseFirestore.instance.collection('expenses').add({
+                    'category': category,
+                    'value': value,
+                    'month': DateTime.now().month,
+                    'day': DateTime.now().day
+                  });
+                  Navigator.of(context).pop();
+                } else {
+                  // ignore: deprecated_member_use
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Selecciona la cantidad y la categoría.'),
+                    ),
+                  );
+                }
+              },
+            ));
+      },
+    );
   }
 }

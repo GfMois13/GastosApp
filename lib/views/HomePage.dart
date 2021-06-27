@@ -3,12 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gastos/states/LoginState.dart';
 import 'package:gastos/styles/Styles.dart';
-// ignore: unused_import
 import 'package:gastos/widgets/graphic_widget.dart';
 import 'package:gastos/widgets/month_widget.dart';
-// ignore: implementation_imports
-import 'package:flutter/src/widgets/heroes.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -46,20 +45,19 @@ class _HomePageState extends State<HomePage> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            _bottomActionBar(FontAwesomeIcons.history),
-            _bottomActionBar(FontAwesomeIcons.chartPie),
+            _bottomActionBar(FontAwesomeIcons.history, () {}),
+            _bottomActionBar(FontAwesomeIcons.chartPie, () {}),
             SizedBox(width: 48.0),
-            _bottomActionBar(FontAwesomeIcons.wallet),
-            _bottomActionBar(Icons.settings),
+            _bottomActionBar(FontAwesomeIcons.wallet, () {}),
+            _bottomActionBar(Icons.settings, () {
+              Provider.of<LoginState>(context).logout();
+            }),
           ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        child: Hero(
-          tag: 'addButton',
-          child: Icon(Icons.add),
-        ),
+        child: Icon(Icons.add),
         onPressed: () {
           Navigator.of(context).pushNamed('/add');
         },
@@ -74,7 +72,7 @@ class _HomePageState extends State<HomePage> {
   ///                                                          ///
   ////////////////////////////////////////////////////////////////
 
-  Widget _bottomActionBar(IconData icon) {
+  Widget _bottomActionBar(IconData icon, Function callback) {
     return InkWell(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
