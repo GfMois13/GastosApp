@@ -1,4 +1,5 @@
 // @dart=2.9
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gastos/states/LoginState.dart';
@@ -7,7 +8,7 @@ import 'package:gastos/views/HomePage.dart';
 import 'package:gastos/views/LoginPage.dart';
 import 'package:provider/provider.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
@@ -16,23 +17,26 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<LoginState>(
-      create: (BuildContext context) => LoginState(),
+    return MultiProvider(
+      providers: [
+        Provider<AuthService>(
+          create: (_) => AuthService(FirebaseAuth.instance),
+        ),
+        StreamProvider(
+          create: (context) => context.read<AuthService>().authStateChanges,
+          initialData: null,
+        )
+      ],
       child: MaterialApp(
+        title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
-        initialRoute: '/',
-        title: 'GastosApp',
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
+        home: AuthWrapper(),
         routes: {
-          '/': (BuildContext context) {
-            var state = Provider.of<LoginState>(context);
-            if (state.isLoggedIn()) {
-              return HomePage();
-            } else
-              return LoginPage();
-          },
+          '/home': (BuildContext context) => HomePage(),
           '/add': (BuildContext context) => AddPage(),
         },
       ),
@@ -40,14 +44,19 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// class MyApp extends StatefulWidget {
-//   @override
-//   _MyAppState createState() => _MyAppState();
-// }
+class AuthWrapper extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final firebaseUser = context.watch<User>();
 
-// class _MyAppState extends State<MyApp> {
-//   bool _isLoggedIn = false;
-
+    if (firebaseUser != null) {
+      print(firebaseUser);
+      return HomePage();
+    }
+    return LoginPage();
+  }
+}
+// class MyApp extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
 //     return ChangeNotifierProvider<LoginState>(
@@ -55,7 +64,7 @@ class MyApp extends StatelessWidget {
 //       child: MaterialApp(
 //         debugShowCheckedModeBanner: false,
 //         initialRoute: '/',
-//         title: 'Flutter Demo',
+//         title: 'GastosApp',
 //         theme: ThemeData(
 //           primarySwatch: Colors.blue,
 //         ),
@@ -65,13 +74,7 @@ class MyApp extends StatelessWidget {
 //             if (state.isLoggedIn()) {
 //               return HomePage();
 //             } else
-//               return LoginPage(
-//                 onLoginSuccess: () {
-//                   setState(() {
-//                     _isLoggedIn = true;
-//                   });
-//                 },
-//               );
+//               return LoginPage();
 //           },
 //           '/add': (BuildContext context) => AddPage(),
 //         },

@@ -49,9 +49,7 @@ class _HomePageState extends State<HomePage> {
             _bottomActionBar(FontAwesomeIcons.chartPie, () {}),
             SizedBox(width: 48.0),
             _bottomActionBar(FontAwesomeIcons.wallet, () {}),
-            _bottomActionBar(Icons.settings, () {
-              Provider.of<LoginState>(context).logout();
-            }),
+            _bottomActionBar(Icons.settings, () {}),
           ],
         ),
       ),
