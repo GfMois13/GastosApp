@@ -44,7 +44,6 @@ class _LoginPageState extends State<LoginPage> {
           Container(
             height: double.infinity,
             child: SingleChildScrollView(
-              physics: AlwaysScrollableScrollPhysics(),
               padding: EdgeInsets.symmetric(
                 horizontal: 48.0,
                 vertical: 120.0,
@@ -79,13 +78,33 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         Text(
-                          'Recuerdame',
+                          'Recuérdame',
                           style: inputTitleStyle,
                         ),
                       ],
                     ),
                   ),
                   LoginButton(context),
+                  SignIn(),
+                  SizedBox(height: 30.0),
+                  Container(
+                    height: 60.0,
+                    width: 60.0,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          offset: Offset(0, 2),
+                          blurRadius: 6.0,
+                        ),
+                      ],
+                      image: DecorationImage(
+                        image: AssetImage('assets/logos/facebook1.jpg'),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

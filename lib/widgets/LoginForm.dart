@@ -123,6 +123,16 @@ Widget LoginButton(BuildContext context) {
     child: RaisedButton(
       elevation: 5.0,
       onPressed: () async {
+        final sbNoData = SnackBar(
+          backgroundColor: Colors.black,
+          content: Text('Algún campo no está rellenado. Reviselo'),
+        );
+
+        if (_emailController.text.isEmpty || _passwdController.text.isEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(sbNoData);
+          return;
+        }
+
         await context.read<AuthService>().signIn(
               email: _emailController.text.trim(),
               password: _passwdController.text.trim(),
@@ -144,5 +154,24 @@ Widget LoginButton(BuildContext context) {
         ),
       ),
     ),
+  );
+}
+
+Widget SignIn() {
+  return Column(
+    children: <Widget>[
+      Text(
+        "- O -",
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      SizedBox(height: 20.0),
+      Text(
+        "Registrarse con",
+        style: inputTitleStyle,
+      )
+    ],
   );
 }
