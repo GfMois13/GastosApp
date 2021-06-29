@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gastos/states/LoginState.dart';
+import 'package:flutter/services.dart';
+import 'package:gastos/provider/GoogleProvider.dart';
+import 'package:gastos/provider/LoginState.dart';
 import 'package:gastos/styles/Styles.dart';
 import 'package:gastos/views/LoginPage.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +11,7 @@ final TextEditingController _emailController = new TextEditingController();
 final TextEditingController _passwdController = new TextEditingController();
 bool _rememberMe = false;
 
-Widget EmailForm() {
+Widget emailForm() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
@@ -55,7 +57,7 @@ Widget EmailForm() {
   );
 }
 
-Widget PaswordForm() {
+Widget paswordForm() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
@@ -102,7 +104,7 @@ Widget PaswordForm() {
   );
 }
 
-Widget ForgotPassword() {
+Widget forgotPassword() {
   return Container(
     alignment: Alignment.centerRight,
     child: FlatButton(
@@ -116,27 +118,35 @@ Widget ForgotPassword() {
   );
 }
 
-Widget LoginButton(BuildContext context) {
+Widget loginButton(BuildContext context) {
   return Container(
     padding: EdgeInsets.symmetric(vertical: 25.0),
     width: double.infinity,
     child: RaisedButton(
       elevation: 5.0,
       onPressed: () async {
+        String email = _emailController.text;
+        String password = _passwdController.text;
+
+        _emailController.text = "";
+        _passwdController.text = "";
+
         final sbNoData = SnackBar(
           backgroundColor: Colors.black,
           content: Text('Algún campo no está rellenado. Reviselo'),
         );
 
-        if (_emailController.text.isEmpty || _passwdController.text.isEmpty) {
+        if (email.isEmpty || password.isEmpty) {
           ScaffoldMessenger.of(context).showSnackBar(sbNoData);
           return;
         }
 
         await context.read<AuthService>().signIn(
-              email: _emailController.text.trim(),
-              password: _passwdController.text.trim(),
+              email: email.trim(),
+              password: password.trim(),
             );
+        SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
+        SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
       },
       padding: EdgeInsets.all(15.0),
       shape: RoundedRectangleBorder(
@@ -157,7 +167,7 @@ Widget LoginButton(BuildContext context) {
   );
 }
 
-Widget SignIn() {
+Widget signIn() {
   return Column(
     children: <Widget>[
       Text(
@@ -173,5 +183,60 @@ Widget SignIn() {
         style: inputTitleStyle,
       )
     ],
+  );
+}
+
+Widget signInWith(context) {
+  return Padding(
+    padding: EdgeInsets.symmetric(vertical: 30.0),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        GestureDetector(
+          onTap: () {},
+          child: Container(
+            height: 60.0,
+            width: 60.0,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  offset: Offset(0, 2),
+                  blurRadius: 6.0,
+                ),
+              ],
+              image: DecorationImage(
+                image: AssetImage('assets/logos/facebook1.jpg'),
+              ),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            signInWithGoogle();
+          },
+          child: Container(
+            height: 60.0,
+            width: 60.0,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  offset: Offset(0, 2),
+                  blurRadius: 6.0,
+                ),
+              ],
+              image: DecorationImage(
+                image: AssetImage('assets/logos/google.jpg'),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
   );
 }

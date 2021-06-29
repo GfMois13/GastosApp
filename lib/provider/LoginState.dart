@@ -1,23 +1,11 @@
+// ignore: unused_import
 import 'package:flutter/material.dart';
+// ignore: unused_import
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:gastos/views/HomePage.dart';
+// ignore: unused_import
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:provider/provider.dart';
-
-class LoginState with ChangeNotifier {
-  bool _loggedIn = false;
-  bool isLoggedIn() => _loggedIn;
-
-  void login() {
-    _loggedIn = true;
-    notifyListeners();
-  }
-
-  void logout() {
-    _loggedIn = false;
-    notifyListeners();
-  }
-}
 
 class AuthService {
   final FirebaseAuth _firebaseAuth;

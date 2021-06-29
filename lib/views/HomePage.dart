@@ -2,10 +2,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:core';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:gastos/states/LoginState.dart';
+import 'package:gastos/provider/LoginState.dart';
 import 'package:gastos/styles/Styles.dart';
+// ignore: unused_import
 import 'package:gastos/widgets/DrawerUsers.dart';
+// ignore: unused_import
 import 'package:gastos/widgets/graphic_widget.dart';
 import 'package:gastos/widgets/month_widget.dart';
 import 'package:provider/provider.dart';
@@ -52,6 +55,8 @@ class _HomePageState extends State<HomePage> {
             _bottomActionBar(FontAwesomeIcons.wallet, () {}),
             _bottomActionBar(Icons.settings, () {
               context.read<AuthService>().signOut();
+              SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
+              SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
             }),
           ],
         ),

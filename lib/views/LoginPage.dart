@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gastos/states/LoginState.dart';
 import 'package:gastos/styles/Styles.dart';
 import 'package:gastos/widgets/LoginForm.dart';
-import 'package:provider/provider.dart';
+import 'package:gastos/provider/LoginState.dart';
 
 bool rememberMe = false;
 
@@ -44,9 +43,10 @@ class _LoginPageState extends State<LoginPage> {
           Container(
             height: double.infinity,
             child: SingleChildScrollView(
+              physics: NeverScrollableScrollPhysics(),
               padding: EdgeInsets.symmetric(
                 horizontal: 48.0,
-                vertical: 120.0,
+                vertical: 45.0,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -56,10 +56,10 @@ class _LoginPageState extends State<LoginPage> {
                     style: titleStyle,
                   ),
                   SizedBox(height: 30.0),
-                  EmailForm(),
+                  emailForm(),
                   SizedBox(height: 30.0),
-                  PaswordForm(),
-                  ForgotPassword(),
+                  paswordForm(),
+                  forgotPassword(),
                   Container(
                     height: 20.0,
                     child: Row(
@@ -84,27 +84,9 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                   ),
-                  LoginButton(context),
-                  SignIn(),
-                  SizedBox(height: 30.0),
-                  Container(
-                    height: 60.0,
-                    width: 60.0,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          offset: Offset(0, 2),
-                          blurRadius: 6.0,
-                        ),
-                      ],
-                      image: DecorationImage(
-                        image: AssetImage('assets/logos/facebook1.jpg'),
-                      ),
-                    ),
-                  ),
+                  loginButton(context),
+                  signIn(),
+                  signInWith(context),
                 ],
               ),
             ),

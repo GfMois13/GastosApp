@@ -2,7 +2,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:gastos/states/LoginState.dart';
+import 'package:flutter/services.dart';
+import 'package:gastos/provider/LoginState.dart';
 import 'package:gastos/views/AddPage.dart';
 import 'package:gastos/views/HomePage.dart';
 import 'package:gastos/views/LoginPage.dart';
@@ -17,6 +18,8 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
     return MultiProvider(
       providers: [
         Provider<AuthService>(
@@ -28,7 +31,7 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'GastosApp',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
@@ -56,29 +59,3 @@ class AuthWrapper extends StatelessWidget {
     return LoginPage();
   }
 }
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return ChangeNotifierProvider<LoginState>(
-//       create: (BuildContext context) => LoginState(),
-//       child: MaterialApp(
-//         debugShowCheckedModeBanner: false,
-//         initialRoute: '/',
-//         title: 'GastosApp',
-//         theme: ThemeData(
-//           primarySwatch: Colors.blue,
-//         ),
-//         routes: {
-//           '/': (BuildContext context) {
-//             var state = Provider.of<LoginState>(context);
-//             if (state.isLoggedIn()) {
-//               return HomePage();
-//             } else
-//               return LoginPage();
-//           },
-//           '/add': (BuildContext context) => AddPage(),
-//         },
-//       ),
-//     );
-//   }
-// }
