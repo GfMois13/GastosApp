@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gastos/provider/LoginState.dart';
 import 'package:gastos/styles/Styles.dart';
+import 'package:gastos/views/RegisterPage.dart';
 // ignore: unused_import
 import 'package:gastos/widgets/DrawerUsers.dart';
 // ignore: unused_import
@@ -21,12 +22,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int currentPage = DateTime.now().month - 1;
   Stream<QuerySnapshot> _query;
+
   // Controllers
   PageController _monthController;
 
   @override
   void initState() {
     super.initState();
+    user.updateDisplayName(userController.text.trim());
 
     _query = FirebaseFirestore.instance
         .collection('expenses')
@@ -42,6 +45,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       bottomNavigationBar: BottomAppBar(
         notchMargin: 8.0,
         shape: CircularNotchedRectangle(),
@@ -52,11 +56,11 @@ class _HomePageState extends State<HomePage> {
             _bottomActionBar(FontAwesomeIcons.history, () {}),
             _bottomActionBar(FontAwesomeIcons.chartPie, () {}),
             SizedBox(width: 48.0),
-            _bottomActionBar(FontAwesomeIcons.wallet, () {}),
+            _bottomActionBar(FontAwesomeIcons.coins, () {
+              Navigator.of(context).pushNamed('/account');
+            }),
             _bottomActionBar(Icons.settings, () {
-              context.read<AuthService>().signOut();
-              SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
-              SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+              scaffoldKey.currentState.openEndDrawer();
             }),
           ],
         ),
@@ -69,6 +73,7 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       body: _body(),
+      endDrawer: UserDrawer(),
     );
   }
 

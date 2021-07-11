@@ -2,7 +2,12 @@
 import 'package:flutter/material.dart';
 // ignore: unused_import
 // ignore: import_of_legacy_library_into_null_safe
+// ignore: unused_import
 import 'package:gastos/views/HomePage.dart';
+// ignore: unused_import
+import 'package:gastos/views/RegisterPage.dart';
+// ignore: unused_import
+import 'package:gastos/widgets/DrawerUsers.dart';
 // ignore: unused_import
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -35,7 +40,6 @@ class AuthService {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
-      return "Usuario creado";
     } on FirebaseAuthException catch (e) {
       return e.message;
     }

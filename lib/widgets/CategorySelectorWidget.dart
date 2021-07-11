@@ -43,7 +43,7 @@ class CategoryWidget extends StatelessWidget {
             ),
             child: Icon(icon),
           ),
-          Text(name)
+          Text(name),
         ],
       ),
     );

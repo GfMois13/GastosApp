@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gastos/widgets/CategorySelectorWidget.dart';
 
 class AddPage extends StatefulWidget {
@@ -56,8 +57,10 @@ class _AddPageState extends State<AddPage> {
       child: CategorySelectorWidget(
         categories: {
           "Compras": Icons.shopping_cart,
-          "Alcohol": Icons.local_drink,
+          "Ropa": FontAwesomeIcons.tshirt,
           "Comida": Icons.fastfood,
+          "Juegos": FontAwesomeIcons.gamepad,
+          "Caprichos": FontAwesomeIcons.gem,
         },
         valueChanged: (newCategory) => category = newCategory,
       ),

@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gastos/provider/GoogleProvider.dart';
 import 'package:gastos/provider/LoginState.dart';
 import 'package:gastos/styles/Styles.dart';
@@ -232,6 +235,29 @@ Widget signInWith(context) {
               ],
               image: DecorationImage(
                 image: AssetImage('assets/logos/google.jpg'),
+              ),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).pushNamed('/register');
+          },
+          child: Container(
+            height: 60.0,
+            width: 60.0,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  offset: Offset(0, 2),
+                  blurRadius: 6.0,
+                ),
+              ],
+              image: DecorationImage(
+                image: AssetImage('assets/logos/create.jpg'),
               ),
             ),
           ),

@@ -4,9 +4,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gastos/provider/LoginState.dart';
+import 'package:gastos/views/AccountPage.dart';
 import 'package:gastos/views/AddPage.dart';
 import 'package:gastos/views/HomePage.dart';
 import 'package:gastos/views/LoginPage.dart';
+import 'package:gastos/views/RegisterPage.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -41,6 +43,8 @@ class MyApp extends StatelessWidget {
         routes: {
           '/home': (BuildContext context) => HomePage(),
           '/add': (BuildContext context) => AddPage(),
+          '/account': (BuildContext context) => AccountPage(),
+          '/register': (BuildContext context) => RegisterPage(),
         },
       ),
     );
